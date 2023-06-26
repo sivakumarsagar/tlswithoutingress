@@ -1,10 +1,105 @@
+NAME: my-reloader
+LAST DEPLOYED: Mon Jun 26 03:32:05 2023
+NAMESPACE: badgereder
+STATUS: pending-install
+REVISION: 1
+TEST SUITE: None
+USER-SUPPLIED VALUES:
+{}
+
+COMPUTED VALUES:
+fullnameOverride: ""
+global:
+  imagePullSecrets: []
+kubernetes:
+  host: https://kubernetes.default
+nameOverride: ""
+reloader:
+  custom_annotations: {}
+  deployment:
+    affinity: {}
+    annotations: {}
+    containerSecurityContext: {}
+    env:
+      existing: null
+      field: null
+      open: null
+      secret: null
+    image:
+      name: ghcr.io/stakater/reloader
+      pullPolicy: IfNotPresent
+      tag: v1.0.28
+    labels:
+      group: com.stakater.platform
+      provider: stakater
+      version: v1.0.28
+    livenessProbe: {}
+    nodeSelector: null
+    pod:
+      annotations: {}
+    priorityClassName: ""
+    readinessProbe: {}
+    replicas: 1
+    resources: {}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+    tolerations: []
+    topologySpreadConstraints: []
+  enableHA: false
+  ignoreConfigMaps: false
+  ignoreNamespaces: ""
+  ignoreSecrets: false
+  isArgoRollouts: false
+  isOpenshift: false
+  legacy:
+    rbac: false
+  logFormat: ""
+  matchLabels: {}
+  namespaceSelector: ""
+  podDisruptionBudget:
+    enabled: false
+  podMonitor:
+    annotations: {}
+    enabled: false
+    honorLabels: true
+    labels: {}
+    metricRelabelings: []
+    podTargetLabels: []
+    relabelings: []
+  rbac:
+    enabled: true
+    labels: {}
+  readOnlyRootFileSystem: false
+  reloadOnCreate: false
+  reloadStrategy: default
+  resourceLabelSelector: ""
+  service: {}
+  serviceAccount:
+    annotations: {}
+    create: true
+    labels: {}
+    name: null
+  serviceMonitor:
+    annotations: {}
+    enabled: false
+    honorLabels: true
+    labels: {}
+    metricRelabelings: []
+    relabelings: []
+    targetLabels: []
+  syncAfterRestart: false
+  watchGlobally: true
+
+HOOKS:
+MANIFEST:
 ---
 # Source: reloader/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   annotations:
-    meta.helm.sh/release-namespace: "default"
+    meta.helm.sh/release-namespace: "badgereder"
     meta.helm.sh/release-name: "my-reloader"
   labels:
     app: my-reloader-reloader
@@ -13,7 +108,7 @@ metadata:
     heritage: "Helm"
     app.kubernetes.io/managed-by: "Helm"
   name: my-reloader-reloader
-  namespace: default
+  namespace: badgereder
 ---
 # Source: reloader/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -21,7 +116,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   annotations:
-    meta.helm.sh/release-namespace: "default"
+    meta.helm.sh/release-namespace: "badgereder"
     meta.helm.sh/release-name: "my-reloader"
   labels:
     app: my-reloader-reloader
@@ -75,7 +170,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   annotations:
-    meta.helm.sh/release-namespace: "default"
+    meta.helm.sh/release-namespace: "badgereder"
     meta.helm.sh/release-name: "my-reloader"
   labels:
     app: my-reloader-reloader
@@ -91,14 +186,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: my-reloader-reloader
-    namespace: default
+    namespace: badgereder
 ---
 # Source: reloader/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    meta.helm.sh/release-namespace: "default"
+    meta.helm.sh/release-namespace: "badgereder"
     meta.helm.sh/release-name: "my-reloader"
   labels:
     app: my-reloader-reloader
@@ -110,7 +205,7 @@ metadata:
     provider: stakater
     version: v1.0.28
   name: my-reloader-reloader
-  namespace: default
+  namespace: badgereder
 spec:
   replicas: 1
   revisionHistoryLimit: 2
@@ -163,3 +258,12 @@ spec:
         runAsNonRoot: true
         runAsUser: 65534
       serviceAccountName: my-reloader-reloader
+
+NOTES:
+- For a `Deployment` called `foo` have a `ConfigMap` called `foo-configmap`. Then add this annotation to main metadata of your `Deployment`
+  configmap.reloader.stakater.com/reload: "foo-configmap"
+
+- For a `Deployment` called `foo` have a `Secret` called `foo-secret`. Then add this annotation to main metadata of your `Deployment`
+  secret.reloader.stakater.com/reload: "foo-secret"
+
+- After successful installation, your pods will get rolling updates when a change in data of configmap or secret will happen.
