@@ -5,7 +5,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: my-release-cert-manager-startupapicheck
-  namespace: default
+  namespace: badgereder
   annotations:
     helm.sh/hook: post-install
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
@@ -25,7 +25,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: my-release-cert-manager-startupapicheck:create-cert
-  namespace: default
+  namespace: badgereder
   labels:
     app: startupapicheck
     app.kubernetes.io/name: startupapicheck
@@ -48,7 +48,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: my-release-cert-manager-startupapicheck:create-cert
-  namespace: default
+  namespace: badgereder
   labels:
     app: startupapicheck
     app.kubernetes.io/name: startupapicheck
@@ -68,14 +68,14 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: my-release-cert-manager-startupapicheck
-    namespace: default
+    namespace: badgereder
 ---
 # Source: cert-manager/templates/startupapicheck-job.yaml
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: my-release-cert-manager-startupapicheck
-  namespace: default
+  namespace: badgereder
   labels:
     app: startupapicheck
     app.kubernetes.io/name: startupapicheck
@@ -130,7 +130,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: my-release-cert-manager-cainjector
-  namespace: default
+  namespace: badgereder
   labels:
     app: cainjector
     app.kubernetes.io/name: cainjector
@@ -146,7 +146,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: my-release-cert-manager
-  namespace: default
+  namespace: badgereder
   labels:
     app: cert-manager
     app.kubernetes.io/name: cert-manager
@@ -162,7 +162,7 @@ kind: ServiceAccount
 automountServiceAccountToken: true
 metadata:
   name: my-release-cert-manager-webhook
-  namespace: default
+  namespace: badgereder
   labels:
     app: webhook
     app.kubernetes.io/name: webhook
@@ -177,7 +177,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: my-release-cert-manager-webhook
-  namespace: default
+  namespace: badgereder
   labels:
     app: webhook
     app.kubernetes.io/name: webhook
@@ -594,7 +594,7 @@ roleRef:
   name: my-release-cert-manager-cainjector
 subjects:
   - name: my-release-cert-manager-cainjector
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -616,7 +616,7 @@ roleRef:
   name: my-release-cert-manager-controller-issuers
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -638,7 +638,7 @@ roleRef:
   name: my-release-cert-manager-controller-clusterissuers
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -660,7 +660,7 @@ roleRef:
   name: my-release-cert-manager-controller-certificates
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -682,7 +682,7 @@ roleRef:
   name: my-release-cert-manager-controller-orders
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -704,7 +704,7 @@ roleRef:
   name: my-release-cert-manager-controller-challenges
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -726,7 +726,7 @@ roleRef:
   name: my-release-cert-manager-controller-ingress-shim
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -748,7 +748,7 @@ roleRef:
   name: my-release-cert-manager-controller-approve:cert-manager-io
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/rbac.yaml
@@ -770,7 +770,7 @@ roleRef:
   name: my-release-cert-manager-controller-certificatesigningrequests
 subjects:
   - name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
     kind: ServiceAccount
 ---
 # Source: cert-manager/templates/webhook-rbac.yaml
@@ -794,7 +794,7 @@ subjects:
 - apiGroup: ""
   kind: ServiceAccount
   name: my-release-cert-manager-webhook
-  namespace: default
+  namespace: badgereder
 ---
 # Source: cert-manager/templates/cainjector-rbac.yaml
 # leader election rules
@@ -853,7 +853,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: my-release-cert-manager-webhook:dynamic-serving
-  namespace: default
+  namespace: badgereder
   labels:
     app: webhook
     app.kubernetes.io/name: webhook
@@ -896,7 +896,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: my-release-cert-manager-cainjector
-    namespace: default
+    namespace: badgereder
 ---
 # Source: cert-manager/templates/rbac.yaml
 # grant cert-manager permission to manage the leaderelection configmap in the
@@ -922,14 +922,14 @@ subjects:
   - apiGroup: ""
     kind: ServiceAccount
     name: my-release-cert-manager
-    namespace: default
+    namespace: badgereder
 ---
 # Source: cert-manager/templates/webhook-rbac.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: my-release-cert-manager-webhook:dynamic-serving
-  namespace: default
+  namespace: badgereder
   labels:
     app: webhook
     app.kubernetes.io/name: webhook
@@ -946,14 +946,14 @@ subjects:
 - apiGroup: ""
   kind: ServiceAccount
   name: my-release-cert-manager-webhook
-  namespace: default
+  namespace: badgereder
 ---
 # Source: cert-manager/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: my-release-cert-manager
-  namespace: default
+  namespace: badgereder
   labels:
     app: cert-manager
     app.kubernetes.io/name: cert-manager
@@ -979,7 +979,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: my-release-cert-manager-webhook
-  namespace: default
+  namespace: badgereder
   labels:
     app: webhook
     app.kubernetes.io/name: webhook
@@ -1005,7 +1005,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-release-cert-manager-cainjector
-  namespace: default
+  namespace: badgereder
   labels:
     app: cainjector
     app.kubernetes.io/name: cainjector
@@ -1062,7 +1062,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-release-cert-manager
-  namespace: default
+  namespace: badgereder
   labels:
     app: cert-manager
     app.kubernetes.io/name: cert-manager
@@ -1133,7 +1133,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: my-release-cert-manager-webhook
-  namespace: default
+  namespace: badgereder
   labels:
     app: webhook
     app.kubernetes.io/name: webhook
@@ -1258,7 +1258,7 @@ webhooks:
     clientConfig:
       service:
         name: my-release-cert-manager-webhook
-        namespace: default
+        namespace: badgereder
         path: /mutate
 ---
 # Source: cert-manager/templates/webhook-validating-webhook.yaml
@@ -1310,5 +1310,5 @@ webhooks:
     clientConfig:
       service:
         name: my-release-cert-manager-webhook
-        namespace: default
+        namespace: badgereder
         path: /validate
